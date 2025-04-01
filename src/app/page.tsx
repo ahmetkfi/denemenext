@@ -1386,7 +1386,7 @@ export default function GothicArtApp() {
                   <p className="text-sm text-[#d1a0a0]">{artist.years}</p>
                   <div className="flex items-center text-white text-sm">
                     <span>Detaylar</span>
-                    <ChevronRight size={16} className="ml-1" />\
+                    <ChevronRight size={16} className="ml-1"/>
                   </div>
                 </div>
               </div>
