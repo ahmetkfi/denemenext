@@ -20,10 +20,14 @@ import {
   Globe,
   Palette,
   Building,
+  Home,
+  Heart,
+  Users,
+  LogOut,
+  Brush,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-
 
 export default function GothicArtApp() {
   const [loading, setLoading] = useState(true)
@@ -37,6 +41,69 @@ export default function GothicArtApp() {
   const [selectedArtwork, setSelectedArtwork] = useState<string | null>(null)
   const [selectedSculpture, setSelectedSculpture] = useState<string | null>(null)
   const [selectedPeriod, setSelectedPeriod] = useState<string | null>(null)
+  const [selectedArtist, setSelectedArtist] = useState<string | null>(null)
+  const [favorites, setFavorites] = useState([
+    {
+      id: "notre-dame",
+      type: "cathedral",
+      title: "Notre Dame Katedrali",
+      subtitle: "Paris, Fransa",
+      year: "1163-1345",
+      image: "/notre2.jpg",
+    },
+    {
+      id: "arnolfini",
+      type: "artwork",
+      title: "Arnolfini'nin Evlenmesi",
+      subtitle: "Jan van Eyck",
+      year: "1434",
+      image: "/jan-van-eyck-arnolfininin-evlenmesi-arnolfini-portrait-mdf-tablosu-TH027010.jpg",
+    },
+    {
+      id: "bamberg",
+      type: "sculpture",
+      title: "Bamberg Süvarisi",
+      subtitle: "Anonim (Bamberg Ustası)",
+      year: "1230-1235",
+      image: "/istockphoto-1299472870-612x612.jpg",
+    },
+  ])
+
+  // Sanatçı listesi
+  const artists = [
+    {
+      id: "jan-van-eyck",
+      name: "Jan van Eyck",
+      years: "1390-1441",
+      nationality: "",
+      period: "",
+      works: ["Arnolfini'nin Evlenmesi", "Ghent Altar Panosu (Hubert van Eyck ile)"],
+      bio: "Jan van Eyck, gotik dönemin öncü ressamıdır. Yağlı boya tekniğini mükemmelleştirmiş ve gerçekçi detaylarıyla ünlenmiştir. Portre ve dini konulu eserleriyle tanınır.",
+      image: "/Man-in-a-Turban-Jan-van-Eyck-circa-1433.webp",
+    },
+    {
+      id: "hubert-van-eyck",
+      name: "Hubert van Eyck",
+      years: "1385-1426",
+      nationality: "",
+      period: "",
+      works: ["Ghent Altar Panosu (Jan van Eyck ile)"],
+      bio: "Hubert van Eyck, Jan van Eyck'in ağabeyi ve ortağıdır. Ghent Altar Panosu'nun başlangıç çalışmalarını yapmış, ancak tamamlayamadan ölmüştür. Kardeşi Jan, eseri tamamlamıştır.",
+      image: "/güncel.jpg",
+    },
+    {
+      id: "naumburg-master",
+      name: "Naumburg Ustası",
+      years: "13. yüzyıl",
+      nationality: "Alman",
+      period: "Yüksek Gotik",
+      works: ["Naumburg Kurucuları"],
+      bio: "Naumburg Ustası, Alman Gotik heykel sanatının en önemli temsilcilerinden biridir. Özellikle Naumburg Katedrali'ndeki gerçekçi ve duygusal heykelleriyle tanınır.",
+      image: "/nietzsche-8038937_960_720.jpg",
+    },
+  
+    
+  ]
 
   // Karşılama ekranını göster, sonra giriş ekranına geç
   useEffect(() => {
@@ -86,6 +153,12 @@ export default function GothicArtApp() {
   const handlePeriodSelect = (period: string) => {
     setSelectedPeriod(period)
     setCurrentPage("period-detail")
+  }
+
+  // Sanatçı seçimi
+  const handleArtistSelect = (artistId: string) => {
+    setSelectedArtist(artistId)
+    setCurrentPage("artist-detail")
   }
 
   // Notre Dame Katedrali bilgilerini kısaltalım
@@ -574,7 +647,7 @@ export default function GothicArtApp() {
             {/* Alt kısım */}
             <div className="p-6">
               <Button
-                className="w-full bg-white hover:bg-gray-100 text-[#1e0a0d] rounded-md h-12 text-base font-medium"
+                className="w-full bg-white hover:bg-gray-100 text-[#1e0a0d] mb-8 rounded-md h-12 text-base font-medium"
                 onClick={() => setCurrentPage("main")}
               >
                 <span className="flex items-center justify-center">
@@ -720,7 +793,9 @@ export default function GothicArtApp() {
 
             {/* Katedral görseli */}
             <div className="relative h-48 mx-4 rounded-lg overflow-hidden mb-4">
-              <div className={`absolute inset-0 ${selectedCathedral==="notre-dame" ? "bg-[url('/notre3.jpg')]" : "bg-[url('/chartres-katedrali-img-optimized.webp')]"} bg-cover bg-center`}></div>
+              <div
+                className={`absolute inset-0 ${selectedCathedral === "notre-dame" ? "bg-[url('/notre3.jpg')]" : "bg-[url('/chartres-katedrali-img-optimized.webp')]"} bg-cover bg-center`}
+              ></div>
             </div>
 
             {/* Bilgi kartları */}
@@ -1098,7 +1173,9 @@ export default function GothicArtApp() {
 
             {/* Eser görseli */}
             <div className="relative h-48 mx-4 rounded-lg overflow-hidden mb-4">
-              <div className={`absolute inset-0 ${selectedArtwork == "arnolfini" ? "bg-[url('/evlenmesi.jpeg')]" : "bg-[url('/7087.webp')]"} bg-cover bg-center`}></div>
+              <div
+                className={`absolute inset-0 ${selectedArtwork == "arnolfini" ? "bg-[url('/evlenmesi.jpeg')]" : "bg-[url('/7087.webp')]"} bg-cover bg-center`}
+              ></div>
             </div>
 
             {/* Bilgi kartları */}
@@ -1158,7 +1235,9 @@ export default function GothicArtApp() {
 
             {/* Heykel görseli */}
             <div className="relative h-48 mx-4 rounded-lg overflow-hidden mb-4">
-              <div className={`absolute inset-0 ${selectedSculpture == "bamberg" ? "bg-[url('/suvari.jpeg')]" : "bg-[url('/nietzsche-8038937_960_720.jpg')]"} bg-cover bg-center`}></div>
+              <div
+                className={`absolute inset-0 ${selectedSculpture == "bamberg" ? "bg-[url('/suvari.jpeg')]" : "bg-[url('/nietzsche-8038937_960_720.jpg')]"} bg-cover bg-center`}
+              ></div>
             </div>
 
             {/* Bilgi kartları */}
@@ -1222,7 +1301,9 @@ export default function GothicArtApp() {
 
             {/* Dönem görseli */}
             <div className="relative h-48 mx-4 rounded-lg overflow-hidden mb-4">
-              <div className={`absolute inset-0 ${selectedPeriod == "early" ? "bg-[url('/erken-gotik2.png')]" : "bg-[url('/geç-gotik2.webp')]"} bg-cover bg-center`}></div>
+              <div
+                className={`absolute inset-0 ${selectedPeriod == "early" ? "bg-[url('/erken-gotik2.png')]" : "bg-[url('/geç-gotik2.webp')]"} bg-cover bg-center`}
+              ></div>
             </div>
 
             {/* Bilgi kartları */}
@@ -1261,8 +1342,260 @@ export default function GothicArtApp() {
         </div>
       )}
 
+      {/* Sanatçılar Listesi Ekranı */}
+      {currentPage === "artists" && (
+        <div className="h-full mb-8 flex flex-col bg-gradient-to-b from-[#1e0a0d] to-[#2c1114]">
+          {/* Üst kısım */}
+          <div className="flex items-center px-4 h-16 border-b border-[#4a1a1f]">
+            <Button variant="ghost" size="icon" className="text-white mr-2" onClick={() => setCurrentPage("welcome")}>
+              <ArrowLeft size={20} />
+            </Button>
+            <h2 className="text-xl font-serif text-white">Sanatçılar</h2>
+          </div>
+
+          {/* İçerik */}
+          <div className="flex-1 p-4 overflow-auto mb-16">
+            <p className="text-[#d1a0a0] mb-6">
+              Gotik dönem sanatçıları, Avrupa'nın farklı bölgelerinde çalışmış ve dönemin sanat anlayışını
+              şekillendirmiş önemli isimlerdir.
+            </p>
+
+            <h3 className="text-white text-lg font-medium mb-4">Önemli Sanatçılar</h3>
+
+            {/* Sanatçı Listesi */}
+            {artists.map((artist) => (
+              <div
+                key={artist.id}
+                className="bg-[#2c1114] rounded-lg overflow-hidden mb-4 cursor-pointer"
+                onClick={() => handleArtistSelect(artist.id)}
+              >
+                <div className="relative h-40">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: `url('${artist.image}')` }}
+                  ></div>
+                  <div className="absolute inset-0 bg-black/40"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <h4 className="text-white text-lg font-medium">{artist.name}</h4>
+                    <p className="text-[#d1a0a0] text-sm">
+                      {artist.nationality}, {artist.period}
+                    </p>
+                  </div>
+                </div>
+                <div className="p-4 flex justify-between items-center">
+                  <p className="text-sm text-[#d1a0a0]">{artist.years}</p>
+                  <div className="flex items-center text-white text-sm">
+                    <span>Detaylar</span>
+                    <ChevronRight size={16} className="ml-1" />\
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Sanatçı Detay Ekranı */}
+      {currentPage === "artist-detail" && (
+        <div className="h-full flex flex-col">
+          {/* Arka plan görseli - bulanık */}
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-[url('/placeholder.svg?height=844&width=390')] bg-cover bg-center blur-sm"></div>
+            <div className="absolute inset-0 bg-[#1e0a0d]/70"></div>
+          </div>
+
+          {/* İçerik */}
+          <div className="relative z-10 flex flex-col h-full">
+            {/* Üst kısım */}
+            <div className="flex items-center px-4 h-16">
+              <Button variant="ghost" size="icon" className="text-white mr-2" onClick={() => setCurrentPage("artists")}>
+                <ArrowLeft size={20} />
+              </Button>
+              <h2 className="text-xl font-serif text-white">{artists.find((a) => a.id === selectedArtist)?.name}</h2>
+            </div>
+
+            {/* Sanatçı görseli */}
+            <div className="relative h-48 mx-4 rounded-lg overflow-hidden mb-4">
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url('${artists.find((a) => a.id === selectedArtist)?.image}')` }}
+              ></div>
+            </div>
+
+            {/* Bilgi kartları */}
+            <div className="flex-1 px-4 pb-4 overflow-auto">
+              {selectedArtist && (
+                <>
+                  <div className="bg-[#2c1114]/80 backdrop-blur-sm rounded-lg p-4 mb-3">
+                    <div className="flex items-start">
+                      <div className="bg-[#4a1a1f] rounded-full p-2 mr-3">
+                        <User size={16} className="text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-medium mb-1">Sanatçı</h3>
+                        <p className="text-sm text-[#d1a0a0]">
+                          {artists.find((a) => a.id === selectedArtist)?.name} (
+                          {artists.find((a) => a.id === selectedArtist)?.years})
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-[#2c1114]/80 backdrop-blur-sm rounded-lg p-4 mb-3">
+                    <div className="flex items-start">
+                      <div className="bg-[#4a1a1f] rounded-full p-2 mr-3">
+                        <Globe size={16} className="text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-medium mb-1">Köken ve Dönem</h3>
+                        <p className="text-sm text-[#d1a0a0]">
+                          {artists.find((a) => a.id === selectedArtist)?.nationality} sanatçı,{" "}
+                          {artists.find((a) => a.id === selectedArtist)?.period} döneminde aktif olmuştur.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-[#2c1114]/80 backdrop-blur-sm rounded-lg p-4 mb-3">
+                    <div className="flex items-start">
+                      <div className="bg-[#4a1a1f] rounded-full p-2 mr-3">
+                        <Brush size={16} className="text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-medium mb-1">Önemli Eserleri</h3>
+                        <p className="text-sm text-[#d1a0a0]">
+                          {artists.find((a) => a.id === selectedArtist)?.works.join(", ")}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-[#2c1114]/80 backdrop-blur-sm rounded-lg p-4 mb-3">
+                    <div className="flex items-start">
+                      <div className="bg-[#4a1a1f] rounded-full p-2 mr-3">
+                        <Info size={16} className="text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-medium mb-1">Biyografi</h3>
+                        <p className="text-sm text-[#d1a0a0]">{artists.find((a) => a.id === selectedArtist)?.bio}</p>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Favoriler Ekranı */}
+      {currentPage === "favorites" && (
+        <div className="h-full flex flex-col bg-gradient-to-b from-[#1e0a0d] to-[#2c1114]">
+          {/* Üst kısım */}
+          <div className="flex items-center px-4 h-16 border-b border-[#4a1a1f]">
+            <Button variant="ghost" size="icon" className="text-white mr-2" onClick={() => setCurrentPage("welcome")}>
+              <ArrowLeft size={20} />
+            </Button>
+            <h2 className="text-xl font-serif text-white">Favorilerim</h2>
+          </div>
+
+          {/* İçerik */}
+          <div className="flex-1 mb-16 p-4 overflow-auto">
+            <p className="text-[#d1a0a0] mb-6">
+              Beğendiğiniz ve daha sonra tekrar incelemek istediğiniz eserler burada listelenir.
+            </p>
+
+            <h3 className="text-white text-lg font-medium mb-4">Favori Eserlerim</h3>
+
+            {/* Favori Eserler Listesi */}
+            {favorites.length > 0 ? (
+              favorites.map((favorite) => (
+                <div
+                  key={favorite.id}
+                  className="bg-[#2c1114] rounded-lg overflow-hidden mb-4 cursor-pointer"
+                  onClick={() => {
+                    if (favorite.type === "cathedral") {
+                      handleCathedralSelect(favorite.id)
+                    } else if (favorite.type === "artwork") {
+                      handleArtworkSelect(favorite.id)
+                    } else if (favorite.type === "sculpture") {
+                      handleSculptureSelect(favorite.id)
+                    }
+                  }}
+                >
+                  <div className="relative h-40">
+                    <div
+                      className="absolute inset-0 bg-cover bg-center"
+                      style={{ backgroundImage: `url('${favorite.image}')` }}
+                    ></div>
+                    <div className="absolute inset-0 bg-black/40"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <h4 className="text-white text-lg font-medium">{favorite.title}</h4>
+                      <p className="text-[#d1a0a0] text-sm">{favorite.subtitle}</p>
+                    </div>
+                    <div className="absolute top-3 right-3 bg-[#4a1a1f] rounded-full p-1.5">
+                      <Heart size={18} className="text-white fill-white" />
+                    </div>
+                  </div>
+                  <div className="p-4 flex justify-between items-center">
+                    <p className="text-sm text-[#d1a0a0]">{favorite.year}</p>
+                    <div className="flex items-center text-white text-sm">
+                      <span>Detaylar</span>
+                      <ChevronRight size={16} className="ml-1" />
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-center py-10">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#2c1114] mb-4">
+                  <Heart size={32} className="text-[#4a1a1f]" />
+                </div>
+                <p className="text-[#d1a0a0]">Henüz favori eseriniz bulunmuyor.</p>
+                <p className="text-xs text-[#a05050] mt-2">
+                  Eserleri keşfederken beğendiklerinizi favorilere ekleyebilirsiniz.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Footer Bar - Sadece login ve splash ekranlarında gösterme */}
+      {currentPage !== "login" && currentPage !== "splash" && (
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-[#1e0a0d] border-t border-[#4a1a1f] flex justify-around items-center px-4 z-40">
+          <div className="flex flex-col items-center cursor-pointer" onClick={() => setCurrentPage("welcome")}>
+            <Home size={20} className={`${currentPage === "welcome" ? "text-white" : "text-[#d1a0a0]"} mb-1`} />
+            <span className={`text-xs ${currentPage === "welcome" ? "text-white" : "text-[#d1a0a0]"}`}>Anasayfa</span>
+          </div>
+          <div className="flex flex-col items-center cursor-pointer" onClick={() => setCurrentPage("favorites")}>
+            <Heart size={20} className={`${currentPage === "favorites" ? "text-white" : "text-[#d1a0a0]"} mb-1`} />
+            <span className={`text-xs ${currentPage === "favorites" ? "text-white" : "text-[#d1a0a0]"}`}>
+              Favoriler
+            </span>
+          </div>
+          <div className="flex flex-col items-center cursor-pointer" onClick={() => setCurrentPage("artists")}>
+            <Users
+              size={20}
+              className={`${currentPage === "artists" || currentPage === "artist-detail" ? "text-white" : "text-[#d1a0a0]"} mb-1`}
+            />
+            <span
+              className={`text-xs ${currentPage === "artists" || currentPage === "artist-detail" ? "text-white" : "text-[#d1a0a0]"}`}
+            >
+              Sanatçılar
+            </span>
+          </div>
+          <div className="flex flex-col items-center cursor-pointer" onClick={() => setCurrentPage("login")}>
+            <LogOut size={20} className="text-[#d1a0a0] mb-1" />
+            <span className="text-xs text-[#d1a0a0]">Çıkış Yap</span>
+          </div>
+        </div>
+      )}
+
       {/* Ana ekran çizgisi */}
-      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-1/3 h-1 bg-[#4a1a1f] rounded-full z-50"></div>
+      {currentPage !== "login" && currentPage !== "splash" && (
+        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 w-1/3 h-1 bg-[#4a1a1f] rounded-full z-50"></div>
+      )}
     </div>
   )
 }
